@@ -448,15 +448,18 @@ function logout() {
 function clearAuthForm() {
     $('#loginEmail').val('');
     $('#loginPassword').val('');
+    $('#displayNameInput').val('');
+    $('#displayNameGroup').hide();
 }
 
 // UI更新
-// 　バグ入りなので要修正（emailアドレスを表示するべきところを uid を表示してしまっている）
 function updateUI(user) {
     if (user) {
         $('.logged-in').show();
         $('.logged-out').hide();
-        $('#userEmail').text(user.uid);
+        // displayNameがあればそれ、なければメールアドレスを表示
+        const displayName = user.displayName || user.email;
+        $('#userEmail').text(displayName);
     } else {
         $('.logged-in').hide();
         $('.logged-out').show();
