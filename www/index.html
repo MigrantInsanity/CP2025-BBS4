@@ -502,10 +502,20 @@ $(function() {
         login(email, password);
     });
 
-    $('#registerButton').on('click', () => {
+        // 新規登録ボタンでニックネーム入力欄を表示してから登録処理
+    $('#registerButton').on('click', (e) => {
+        e.preventDefault();
+        // ニックネーム入力欄を表示
+        $('#displayNameGroup').show();
         const email = $('#loginEmail').val();
         const password = $('#loginPassword').val();
-        register(email, password);
+        const displayName = $('#displayNameInput').val();
+        register(email, password, displayName);
+    });
+
+    // ログインボタンでニックネーム入力欄を非表示
+    $('#loginButton').on('click', () => {
+        $('#displayNameGroup').hide();
     });
 
     $('#logoutButton').on('click', logout);
@@ -545,6 +555,12 @@ window.addEventListener('unload', () => {
                 <input type="password" id="loginPassword"
                        class="form-control" placeholder="6文字以上">
                 <small class="help-text">※新規登録時は6文字以上</small>
+            </div>
+            <div class="form-group" id="displayNameGroup" style="display: none;">
+                <label for="displayNameInput">ニックネーム</label>
+                <input type="text" id="displayNameInput"
+                       class="form-control" placeholder="ニックネームを入力してください" maxlength="20">
+                <small class="help-text">※投稿時に表示される名前です（20文字以内）</small>
             </div>
             <div class="button-group">
                 <button id="loginButton" class="btn-primary">ログイン</button>
